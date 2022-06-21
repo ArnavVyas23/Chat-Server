@@ -31,16 +31,33 @@ typedef struct{
 	char name[32];
 } client_threads;
 
+pthread_mutex_t cli_mtx = PTHREAD_MUTEX_INITIALIZER;
 client_threads *users[MAXCLIENTS]; // List of clients
 
-pthread_mutex_t cli_mtx = PTHREAD_MUTEX_INITIALIZER;
-
-int check(int exp, const char *msg) {
+int check(int exp, const char *message) {
     if(exp == -1){
-        perror(msg) ;
+        perror(message) ;
         exit(1) ;
     }
     return exp ;
+}
+
+/* function to broadcast message form a client to all other clients as well as the server */
+
+void broadcast_message(char *s, int id){
+	pthread_mutex_lock(&cli_mtx);
+
+	for(int i=0; i<MAXCLIENTS; ++i){
+		if(users[i]){
+			if(users[i]->userId != id){
+				if(write(users[i]->sockfd, s, strlen(s)) < 0){
+					perror("ERROR: Failed to write to user");
+					break;
+				}
+			}
+		}
+	}
+	pthread_mutex_unlock(&cli_mtx);
 }
 
 /* function to add a new client to queue */
@@ -65,24 +82,6 @@ void remFromQueue(int id){
 			if(users[i]->userId == id){
 				users[i] = NULL;
 				break;
-			}
-		}
-	}
-	pthread_mutex_unlock(&cli_mtx);
-}
-
-/* function to broadcast message form a client to all other clients as well as the server */
-
-void broadcast_message(char *s, int id){
-	pthread_mutex_lock(&cli_mtx);
-
-	for(int i=0; i<MAXCLIENTS; ++i){
-		if(users[i]){
-			if(users[i]->userId != id){
-				if(write(users[i]->sockfd, s, strlen(s)) < 0){
-					perror("ERROR: Failed to write to user");
-					break;
-				}
 			}
 		}
 	}
@@ -117,7 +116,7 @@ void *handle_client(void *arg){
 			break;
 		}
         	
-        	int mes_rec = recv(clie->sockfd, buf_out, BUFFERLEN, 0);
+        	int mes_rec = recv(clie->sockfd, buf_out, BUFFERLEN, 0); //recieving the message from client
 		if (mes_rec > 0){
 			if(strlen(buf_out) > 0){
 				broadcast_message(buf_out, clie->userId);
@@ -126,7 +125,7 @@ void *handle_client(void *arg){
 		} 
 		else if (mes_rec == 0 || strcmp(buf_out, "exit") == 0){
 			cout<<"\033[91m";
-			sprintf(buf_out,"%s\033[91m has left the room\033[0m\n", clie->name);
+			sprintf(buf_out,"%s\033[91m has left the room\033[0m\n", clie->name); //if message = "exit", Leave the server.
 			cout<<reset_col;
 			printf("%s", buf_out);
 			broadcast_message(buf_out, clie->userId);
@@ -137,10 +136,10 @@ void *handle_client(void *arg){
 			ex = true;
 		}
 
-		bzero(buf_out, BUFFERLEN);
+		bzero(buf_out, BUFFERLEN); //to clear out buffer
 	}
 
-  /* Delete client from queue and yield thread */
+  /* Removes the client from queue and releases the thread */
         close(clie->sockfd);
   	remFromQueue(clie->userId);
   	Nofclient--;
