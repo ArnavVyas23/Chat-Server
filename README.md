@@ -6,7 +6,6 @@ sockets and multi-threading, which works on Linux based OS.
 
 
 
-
 ## Deployment
 
 Since the chat server is written in cpp; therefore installation of
@@ -65,9 +64,13 @@ server and the client is ready to interact with the server and all other clients
 the server recieve a message that the client has joined the chat room. Whenever a message 
 is sent by any other client, the name of the sending client along with the message
 is diplayed on the client's terminal. If the client writes a message and unless
-the message is not "exit" the message is boradcasted to all the users. On writing
+the message is not "exit" the message is broadcasted to all the users. On writing
 exit, the client is removed from the server and all the other clients and the server
 recieve a message forthe same.
+
+## Video Demo
+
+https://user-images.githubusercontent.com/98050969/174826909-ce090684-f7d1-47b6-91b6-0c994555a5e5.mp4
 
 ## Learnings
 
@@ -91,3 +94,4 @@ through POSIX threads in the chat server.
 - https://www.geeksforgeeks.org/socket-programming-cc/
 - https://dzone.com/articles/parallel-tcpip-socket-server-with-multi-threading 
 - https://www.geeksforgeeks.org/multithreading-c-2/
+
