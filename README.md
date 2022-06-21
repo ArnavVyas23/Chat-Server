@@ -90,7 +90,7 @@ through POSIX threads in the chat server.
 
 - The joining and leaving of clients is color coded.
 
-- Use of a keyword ("exit' in our case) to remove a client from the server.
+- Use of a keyword ("exit") to remove a client from the server.
 ## References
 
 - https://www.geeksforgeeks.org/socket-programming-cc/
