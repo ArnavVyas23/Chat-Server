@@ -99,8 +99,10 @@ through POSIX threads in the chat server.
 - The joining and leaving of clients is color coded.
 
 - Use of a keyword ("exit") has been done to remove a client from the server.
-## References
+## Resources
 
+
+  These resources have helped me to understand the required concepts properly as well as to implement them
 - https://www.geeksforgeeks.org/socket-programming-cc/
 - https://dzone.com/articles/parallel-tcpip-socket-server-with-multi-threading 
 - https://www.geeksforgeeks.org/multithreading-c-2/
