@@ -9,7 +9,7 @@ sockets and multi-threading, which works on Linux based OS.
 
 ## Deployment
 
-Since the chat server is written in cpp; therefore, installation of
+Since the chat server is written in cpp; therefore installation of
 g++ is a prerequisite. 
 
 To deploy the chat server, first compile the server.cpp and 
