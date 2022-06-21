@@ -49,7 +49,7 @@ void* handler_send(void* arg) {
     fgets(text, MAXLEN, stdin);
     trm_str(text,MAXLEN);
 
-    if (strcmp(text,"exit")==0) {
+    if (strcmp(text,"exit")==0) { // if the message = exit, then leave.
 	break;
     } 
     else 
@@ -94,7 +94,7 @@ int main(int argc, char **argv){
 	}
 	SA_IN server_addr;
 
-	/* Socket settings */
+	/* Socket functions */
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
         server_addr.sin_family=AF_INET;
 	server_addr.sin_port=htons(10000);
@@ -108,13 +108,13 @@ int main(int argc, char **argv){
 
 	pthread_t send_thread,recieve_thread;
     
-    if(pthread_create(&send_thread, NULL, &handler_send, NULL) != 0){
-		printf("ERROR: pthread\n");
+    if(pthread_create(&send_thread, NULL, &handler_send, NULL) != 0){ //thread to send messages
+		printf("ERROR: send thread not created\n");
         return EXIT_FAILURE;
 	}
 
-    if(pthread_create(&recieve_thread, NULL, &handler_recieve, NULL) != 0){
-		printf("ERROR: pthread\n");
+    if(pthread_create(&recieve_thread, NULL, &handler_recieve, NULL) != 0){ //thread to recieve messages
+		printf("ERROR: recieve thread not created\n");
         return EXIT_FAILURE;
 	}
 
