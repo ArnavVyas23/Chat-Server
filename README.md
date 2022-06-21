@@ -1,8 +1,11 @@
 
 # Chat Server
 
-The implementation of a chat server written in CPP, using
-sockets and multi-threading, which works on Linux based OS.
+The project is an implementation of a chat server written in C++, using the concepts of
+sockets and multi-threading, which works on Linux based OS. This server helps any user in 
+effectively communicating with other users on the server and only requires a username from
+the user, after which they can use the server. Since the sending and recieving of messages is 
+done paralelly by individual threads for each client, hence the performance of the server is increased.
 
 
 
@@ -32,7 +35,12 @@ After that, clients can join the server by:
 ## Internal Working
 
 The chat server conists of the server side and the client side which are connected to each other
-through sockets. The port to which both the server and client sockets connect has been pre-set to 10000.  
+through sockets. The port to which both the server and client sockets connect has been pre-set to 10000.
+The concept of multi threading is used for sending and recieving the messages from a client. 
+This is done to increase the performance of the server, since individual threads govern the sending and 
+recieving of messages. Also, to mutex locks are used while adding and removing a client to the user queue.
+This is to ensure that a single client's process is in critical section at a time and thus common data can only 
+be changed by one client at a time.
 
 
 ### Server
@@ -74,23 +82,23 @@ https://user-images.githubusercontent.com/98050969/174826909-ce090684-f7d1-47b6-
 
 ## Learnings
 
-In the course of this project, I have learned the working of sockets
+- In the course of this project, I have learned the working of sockets
 and connecting as well as sending data between different sockets. 
-I have also understood how threads work as well as the concept of
-multi-threading and mutex locks which have been implemented
+- I have also understood how threads work as well as the concept of
+multi-threading and mutex locks, which have been implemented
 through POSIX threads in the chat server. 
 ## Additional Tasks
 
 - From the basic socket programming model using multi-threading, the implementation of a real time chat server has been done.
  
-- Threads have been used for sending and recieving messages
+- Threads are assigned to individual clients for sending and recieving messages as well as adding and recieving clients to the user queue.
 
 - Mutex/locks have been used while adding and removing any client from the
-  list of active users.
+  list of active users to ensure that common data is changed only by one client at a time.
 
 - The joining and leaving of clients is color coded.
 
-- Use of a keyword ("exit") to remove a client from the server.
+- Use of a keyword ("exit") has been done to remove a client from the server.
 ## References
 
 - https://www.geeksforgeeks.org/socket-programming-cc/
