@@ -102,7 +102,7 @@ through POSIX threads in the chat server.
 ## Resources
 
 
-  These resources have helped me to understand the required concepts properly as well as to implement them
+  These resources have helped me to understand the required concepts properly as well as to implement them.
 - https://www.geeksforgeeks.org/socket-programming-cc/
 - https://dzone.com/articles/parallel-tcpip-socket-server-with-multi-threading 
 - https://www.geeksforgeeks.org/multithreading-c-2/
